@@ -63,30 +63,34 @@ body {
 .navbar {
   background:transparent;
   overflow: hidden;
+  width: 100%;
   margin: 0;
   /* border:5px solid black; */
   
 }
 
-.navbar a {
+.navbar .innernav a {
   float: left;
   display: block;
   color: black;
   text-align: center;
-  padding: 14px 0px;
-  text-decoration: none;
   width: 50%;
+  padding: 2rem 0px;
+  text-decoration: none;
+  border-radius:5px;
+  background-color:transparent;
+  font-size:2em;
+  font-weight: bold;
   margin: 0;
-  box-shadow:inset 0px 0px 0px 5px rgb(0, 0, 0);
 }
 
 .navbar a:hover {
-  background-color: rgb(255, 0, 0);
+  background-color: rgb(138, 0, 0);
   color: white;
 }
 
 .navbar a.active {
-  background-color: #8a0000;
+  background-color: rgb(138, 0, 0);
   color: white;
 }
 .header {
