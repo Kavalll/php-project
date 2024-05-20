@@ -50,14 +50,14 @@ if ($searchTerm) {
 
 <div class="flex-container">
     <?php foreach ($brands as $brand): ?>
-                        <div class="brand">
-                            <h2><a href="display_items.php?brandid=<?php echo urlencode($brand['brandid']); ?>"><?php echo htmlspecialchars($brand['brandid']); ?></a></h2>
-                            <p>Founded: <?php echo htmlspecialchars($brand['founded']); ?></p>
-                            <p>Country: <?php echo htmlspecialchars($brand['country']); ?></p>
-                            <p>City: <?php echo htmlspecialchars($brand['city']); ?></p>
-                            <p>Total Sales: <?php echo htmlspecialchars($brand['totalsales']); ?></p>
-                            <img src="<?php echo htmlspecialchars($brand['logo']); ?>" alt="Logo">
-                        </div>
+                            <div class="brand">
+                                <h2><a href="display_items.php?brandid=<?php echo urlencode($brand['brandid']); ?>"><?php echo htmlspecialchars($brand['brandid']); ?></a></h2>
+                                <p>Founded: <?php echo htmlspecialchars($brand['founded']); ?></p>
+                                <p>Country: <?php echo htmlspecialchars($brand['country']); ?></p>
+                                <p>City: <?php echo htmlspecialchars($brand['city']); ?></p>
+                                <p>Total Sales: <?php echo htmlspecialchars($brand['totalsales']); ?></p>
+                                <img src="<?php echo htmlspecialchars($brand['logo']); ?>" alt="Logo">
+                            </div>
     <?php endforeach; ?>
 </div>
 
