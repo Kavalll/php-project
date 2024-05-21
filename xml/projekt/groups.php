@@ -12,7 +12,7 @@
 $url = 'http://wwwlab.webug.se/examples/XML/carservice/group?mode=json';
 $jsonData = file_get_contents($url);
 $companies = json_decode($jsonData, true);
-usort($companies, function ($a, $b) { //usort — Sort an array by values using a user-defined comparison function
+usort($companies, function ($a, $b) { //usort 
     return empty ($a['logo']) - empty ($b['logo']);
 });
 // Get the search term
@@ -49,21 +49,21 @@ if ($searchTerm) {
 
 <div class="flex-container">
     <?php foreach ($filteredCompanies as $company): ?>
-                <div class="brand">
-                    <h2><?php echo htmlspecialchars($company['groupid']); ?></h2>
-                    <?php foreach ($company['members'] as $member): ?>
-                                <strong>
-                                    <p><?php echo htmlspecialchars($member['name']); ?></p>
-                                </strong>
-                                <p>From: <?php echo htmlspecialchars($member['from']); ?></p>
-                                <?php if (isset($member['to'])): ?>
-                                            <p>To: <?php echo htmlspecialchars($member['to']); ?></p>
-                                <?php endif; ?>
-                    <?php endforeach; ?>
-                    <?php if (!empty($company['logo'])): ?>
-                                <img src="<?php echo htmlspecialchars($company['logo']); ?>" alt="Logo">
-                    <?php endif; ?>
-                </div>
+                    <div class="brand">
+                        <h2><?php echo htmlspecialchars($company['groupid']); ?></h2>
+                        <?php foreach ($company['members'] as $member): ?>
+                                        <strong>
+                                            <p><?php echo htmlspecialchars($member['name']); ?></p>
+                                        </strong>
+                                        <p>From: <?php echo htmlspecialchars($member['from']); ?></p>
+                                        <?php if (isset($member['to'])): ?>
+                                                        <p>To: <?php echo htmlspecialchars($member['to']); ?></p>
+                                        <?php endif; ?>
+                        <?php endforeach; ?>
+                        <?php if (!empty($company['logo'])): ?>
+                                        <img src="<?php echo htmlspecialchars($company['logo']); ?>" alt="Logo">
+                        <?php endif; ?>
+                    </div>
     <?php endforeach; ?>
 </div>
 
