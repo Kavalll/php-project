@@ -21,19 +21,17 @@ $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 $filteredCompanies = [];
 
 // Filter the companies based on the search term
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 if ($searchTerm) {
-    foreach ($companies as $company) {
-        $filteredMembers = array_filter($company['members'], function ($member) use ($searchTerm) {
-            return stripos($member['name'], $searchTerm) !== false;
-        });
-
-        if (!empty($filteredMembers)) {
-            $company['members'] = $filteredMembers;
-            $filteredCompanies[] = $company;
+    $companies = array_filter($companies, function ($company) use ($searchTerm) { //filter companies
+        $attributesToSearch = ['groupid', 'companyid', 'model', 'class']; //group attributes
+        foreach ($attributesToSearch as $attribute) {
+            if (isset ($company[$attribute]) && stripos($company[$attribute], $searchTerm) !== false) {
+                return true;
+            }
         }
-    }
-} else {
-    $filteredCompanies = $companies;
+        return false;
+    });
 }
 
 
@@ -43,27 +41,27 @@ if ($searchTerm) {
 </div>
 <!-- Search form -->
 <form method="GET">
-    <input type="text" name="search" placeholder="Search for brands...">
+    <input type="text" name="search" placeholder="Search for companies...">
     <button type="submit">Search</button>
 </form>
 
 <div class="flex-container">
-    <?php foreach ($filteredCompanies as $company): ?>
-                    <div class="brand">
-                        <h2><?php echo htmlspecialchars($company['groupid']); ?></h2>
-                        <?php foreach ($company['members'] as $member): ?>
-                                        <strong>
-                                            <p><?php echo htmlspecialchars($member['name']); ?></p>
-                                        </strong>
-                                        <p>From: <?php echo htmlspecialchars($member['from']); ?></p>
-                                        <?php if (isset($member['to'])): ?>
-                                                        <p>To: <?php echo htmlspecialchars($member['to']); ?></p>
+    <?php foreach ($companies as $company): ?>
+                                    <div class="brand">
+                                        <h2><?php echo htmlspecialchars($company['groupid']); ?></h2>
+                                        <?php foreach ($company['members'] as $member): ?>
+                                                                        <strong>
+                                                                            <p><?php echo htmlspecialchars($member['name']); ?></p>
+                                                                        </strong>
+                                                                        <p>From: <?php echo htmlspecialchars($member['from']); ?></p>
+                                                                        <?php if (isset($member['to'])): ?>
+                                                                                                        <p>To: <?php echo htmlspecialchars($member['to']); ?></p>
+                                                                        <?php endif; ?>
+                                        <?php endforeach; ?>
+                                        <?php if (!empty($company['logo'])): ?>
+                                                                        <img src="<?php echo htmlspecialchars($company['logo']); ?>" alt="Logo">
                                         <?php endif; ?>
-                        <?php endforeach; ?>
-                        <?php if (!empty($company['logo'])): ?>
-                                        <img src="<?php echo htmlspecialchars($company['logo']); ?>" alt="Logo">
-                        <?php endif; ?>
-                    </div>
+                                    </div>
     <?php endforeach; ?>
 </div>
 
