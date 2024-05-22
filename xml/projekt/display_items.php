@@ -72,93 +72,93 @@ if (isset($_GET["brandid"])) {
     $brandid = htmlspecialchars($_GET["brandid"]);
 
     ?>
-        <div class='header'>
-        <a href='index.php'><button><i class="fas fa-angle-double-left fa-4x" aria-hidden="true"></i></button></a>
-        <h3>Most popular cars by: <?php echo htmlspecialchars($brandid); ?></h3>
-    </div>
-    <?php
-    // Construct the API URL with brandid parameter
-    $api_url = "https://wwwlab.webug.se/examples/XML/carservice/carsales/?brandid=" . urlencode($brandid) . "&mode=json";
-    // Fetch data from the API
-    $jsonData = file_get_contents($api_url);
-    // Check for errors in fetching JSON data
-    if ($jsonData === false) {
-        die("Failed to fetch JSON data: " . error_get_last()["message"]);
-    }
-    $selectedModel = isset($_GET["model"]) ? htmlspecialchars($_GET["model"]) : "";
-    // Decode JSON data
-    $data = json_decode($jsonData, true);
-    // Check for errors in decoding JSON data
-    if ($data === null) {
-        die("Failed to decode JSON data: " . json_last_error_msg());
-    }
-    usort($data, "sortByTotalSales");
-    // Output the data in an HTML table
-
-    ?>
-    <!-- Generate the dropdown menu -->
-      
-    <?php if (!empty($data)):
-        // Create an array to store unique models
-        $uniqueModels = [];
-
-        // Filter out duplicate models
-        foreach ($data as $item) {
-            $model = htmlspecialchars($item['model']);
-            if (!in_array($model, $uniqueModels)) {
-
-                $uniqueModels[] = $model;
-
-
-            }
+            <div class='header'>
+            <a href='index.php'><button><i class="fas fa-angle-double-left fa-4x" aria-hidden="true"></i></button></a>
+            <h3>Most popular cars by: <?php echo htmlspecialchars($brandid); ?></h3>
+        </div>
+        <?php
+        // Construct the API URL with brandid parameter
+        $api_url = "https://wwwlab.webug.se/examples/XML/carservice/carsales/?brandid=" . urlencode($brandid) . "&mode=json";
+        // Fetch data from the API
+        $jsonData = file_get_contents($api_url);
+        // Check for errors in fetching JSON data
+        if ($jsonData === false) {
+            die("Failed to fetch JSON data: " . error_get_last()["message"]);
         }
+        $selectedModel = isset($_GET["model"]) ? htmlspecialchars($_GET["model"]) : "";
+        // Decode JSON data
+        $data = json_decode($jsonData, true);
+        // Check for errors in decoding JSON data
+        if ($data === null) {
+            die("Failed to decode JSON data: " . json_last_error_msg());
+        }
+        usort($data, "sortByTotalSales");
+        // Output the data in an HTML table
+    
         ?>
-          <!--  dropdown menu -->
-          <form method="GET">
-              <input type="hidden" name="brandid" value="<?php echo htmlspecialchars($brandid); ?>">
-              <label for="modelSelect">Select a model:</label>
-              <select id="modelSelect" name="model" onchange="this.form.submit()">
-                  <option value="">All models</option>
-                  <?php foreach ($uniqueModels as $model):
-                      ?>
-            <option value="<?php echo $model; ?>" <?php echo $selectedModel === $model ? 'selected' : ''; ?>>
-                <?php echo $model; ?>
-            </option>
-                  <?php endforeach; ?>
-              </select>
-          </form>
+        <!-- Generate the dropdown menu -->
+      
+        <?php if (!empty($data)):
+            // Create an array to store unique models
+            $uniqueModels = [];
 
-                    <table>
-                        <tr>
-                            <th>Brand ID</th>
-                            <th>Model</th>
-                            <th>Period</th>
-                            <th>Class</th>
-                            <th>Sales</th>
-                        </tr>
-                        <?php foreach ($data as $item): ?>
-            <?php if ($selectedModel === "" || $selectedModel === htmlspecialchars($item["model"])): ?>
-                      <tr>
-                          <td><?php echo htmlspecialchars($item["brandid"]); ?></td>
-                          <td><?php echo htmlspecialchars($item["model"]); ?></td>
-                          <td><?php echo htmlspecialchars($item["period"]); ?></td>
-                          <td><?php echo htmlspecialchars($item["class"]); ?></td>
-                          <td><?php echo htmlspecialchars($item["sales"]); ?></td>
-                      </tr>
-                  <?php
-            endif; ?>
-                              <?php
-                        endforeach; ?>
-                    </table>
-                <?php
-    else: ?>
-                    <p>No results found for Brand ID: <?php echo htmlspecialchars($brandid); ?></p>
-                <?php
-    endif;
-    ?>
+            // Filter out duplicate models
+            foreach ($data as $item) {
+                $model = htmlspecialchars($item['model']);
+                if (!in_array($model, $uniqueModels)) {
+
+                    $uniqueModels[] = $model;
+
+
+                }
+            }
+            ?>
+                  <!--  dropdown menu -->
+                  <form method="GET">
+                      <input type="hidden" name="brandid" value="<?php echo htmlspecialchars($brandid); ?>">
+                      <label for="modelSelect">Select a model:</label>
+                      <select id="modelSelect" name="model" onchange="this.form.submit()">
+                          <option value="">All models</option>
+                          <?php foreach ($uniqueModels as $model):
+                              ?>
+                        <option value="<?php echo $model; ?>" <?php echo $selectedModel === $model ? 'selected' : ''; ?>>
+                            <?php echo $model; ?>
+                        </option>
+                          <?php endforeach; ?>
+                      </select>
+                  </form>
+
+                            <table>
+                                <tr>
+                                    <th>Brand ID</th>
+                                    <th>Model</th>
+                                    <th>Release</th>
+                                    <th>Class</th>
+                                    <th>Sales</th>
+                                </tr>
+                                <?php foreach ($data as $item): ?>
+                        <?php if ($selectedModel === "" || $selectedModel === htmlspecialchars($item["model"])): ?>
+                                      <tr>
+                                          <td><?php echo htmlspecialchars($item["brandid"]); ?></td>
+                                          <td><?php echo htmlspecialchars($item["model"]); ?></td>
+                                          <td><?php echo htmlspecialchars($item["period"]); ?></td>
+                                          <td><?php echo htmlspecialchars($item["class"]); ?></td>
+                                          <td><?php echo htmlspecialchars($item["sales"]); ?></td>
+                                      </tr>
+                                  <?php
+                        endif; ?>
+                                          <?php
+                                endforeach; ?>
+                            </table>
+                        <?php
+        else: ?>
+                            <p>No results found for Brand ID: <?php echo htmlspecialchars($brandid); ?></p>
+                        <?php
+        endif;
+        ?>
  
 
-          <?php
+              <?php
 } else {
     echo "<p>No Brand ID provided</p>";
 }

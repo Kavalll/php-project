@@ -32,11 +32,15 @@ input[type="text"] {
 button {
   padding: 10px 20px;
   border: none;
-  background-color: #8a0000;
-  color: white;
+  color: #fff;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
+  background:rgb(148, 18, 18);
+
+}
+a > button {
+  background:transparent;
 }
 button:hover {
   background-color: #741212;
@@ -100,6 +104,7 @@ body {
   background: rgb(164, 7, 7);
   color: white;
   font-size: 30px;
+  margin-top:30px;
 }
 
 .flex-container {
@@ -121,4 +126,18 @@ body {
 .brand img {
   max-width: 100px;
   height: auto;
+}
+
+
+.header  {
+  background: linear-gradient(275deg, #e60000, #940b0b, #c22929);
+  background-size: 600% 600%;
+
+  animation: kaval 15s ease infinite;
+}
+
+@keyframes kaval {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
