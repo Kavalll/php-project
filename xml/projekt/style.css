@@ -116,7 +116,9 @@ body {
   border-radius: 8px;
   padding: 16px;
   margin: 8px;
-  flex: 1 1 calc(33.333% - 32px);
+  flex-grow: 1; /* Allows the item to grow to fill available space */
+  flex-shrink: 1; /* Allows the item to shrink if necessary */
+  flex-basis: calc(33.333% - 32px); /* size of the item */
   box-sizing: border-box;
   text-align: center;
 }
